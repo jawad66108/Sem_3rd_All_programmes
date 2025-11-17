@@ -1,54 +1,54 @@
-#include<iostream>
-using namespace std;
-int main(){
-	int n,ch,pos;
-	bool p=true;
-	cout<<"Enter numbers of students: ";
-	cin>>n;
-	int arr[n];
-	cout<<"Enter marks of each student\n";
-	for(int i=0;i<n;i++){
-		cout<<i+1<<" ) ";
-		cin>>arr[i];
-		
-    }
-	
-	cout<<"\nEnter marks you want to see that wether it is present in the array: ";
-	cin>>ch;
-	
-	for(int j=0;j<n;j++){
-		if(ch==arr[j]){
-			cout<<"Found at index: "<<j;
-			p=false;
-			break;
-			
-		}
-	}
-	if(p){
-		cout<<ch<<" is not present!!\n";
-	}
-	
-	cout<<"\nEnter marks you want to delete: ";
-	cin>>pos;
-	
-	for(int j=0;j<n;j++){
-		if(pos==arr[j]){
-			for(int i=j;i<n-1;i++){
-		        arr[i]=arr[i+1];
-		}
-		n--;
-		break;
-		}
-	}
-	cout << "\nTotal memory used by the array: "<< sizeof(arr)<<" bytes";
-	cout << "\nNumber of elements stored: "<< sizeof(arr)/sizeof(arr[0])<<"\n";
-
-	
-	for(int j=0;j<n;j++){
-		cout<<arr[j]<<" ";
-	}
-
-}
+//#include<iostream>
+//using namespace std;
+//int main(){
+//	int n,ch,pos;
+//	bool p=true;
+//	cout<<"Enter numbers of students: ";
+//	cin>>n;
+//	int arr[n];
+//	cout<<"Enter marks of each student\n";
+//	for(int i=0;i<n;i++){
+//		cout<<i+1<<" ) ";
+//		cin>>arr[i];
+//		
+//    }
+//	
+//	cout<<"\nEnter marks you want to see that wether it is present in the array: ";
+//	cin>>ch;
+//	
+//	for(int j=0;j<n;j++){
+//		if(ch==arr[j]){
+//			cout<<"Found at index: "<<j;
+//			p=false;
+//			break;
+//			
+//		}
+//	}
+//	if(p){
+//		cout<<ch<<" is not present!!\n";
+//	}
+//	
+//	cout<<"\nEnter marks you want to delete: ";
+//	cin>>pos;
+//	
+//	for(int j=0;j<n;j++){
+//		if(pos==arr[j]){
+//			for(int i=j;i<n-1;i++){
+//		        arr[i]=arr[i+1];
+//		}
+//		n--;
+//		break;
+//		}
+//	}
+//	cout << "\nTotal memory used by the array: "<< sizeof(arr)<<" bytes";
+//	cout << "\nNumber of elements stored: "<< sizeof(arr)/sizeof(arr[0])<<"\n";
+//
+//	
+//	for(int j=0;j<n;j++){
+//		cout<<arr[j]<<" ";
+//	}
+//
+//}
 
 
 //#include <iostream>
@@ -102,4 +102,37 @@ int main(){
 //
 //    return 0;
 //}
+
+
+//#include<iostream>
+//using namespace std;
+//int main(){
+//	int n=3;
+//	int arr[n]={1,2,3};
+//	int pos,value;
+//	
+//	cout<<"Enter pos and value: ";
+//	cin>>pos>>value;
+//	
+//	for(int i=n;i>pos;i--){
+//		arr[i]=arr[i-1];
+//	}
+//	arr[pos]=value;
+//	n++;
+//	cout<<endl;
+//	for(int i=0;i<n;i++){
+//		cout<<arr[i]<<" ";
+//	}
+//	
+//	for(int i=pos;i<n;i++){
+//		arr[i]=arr[i+1];
+//	}
+//	n--;
+//	cout<<endl;
+//	for(int i=0;i<n;i++){
+//		cout<<arr[i]<<" ";
+//	}
+//	
+//}
+
 
