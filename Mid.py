@@ -1,42 +1,45 @@
-# import pandas as pd
-# df = pd.read_csv(r"C:\Users\Admin\OneDrive\Documents\Desktop\patients1.csv")
-# print(df)
+def CS_Encrypt(plaintext, key):
+    result = ""
+    for i in plaintext:
+            ap = chr((ord(i) - 65 + key) % 26 + 65) 
+            if ap == 'Q':
+                ap = 'E'
+            result += ap
 
-# max_score = 0
+    return result
 
-# for i in df.iterrows():
-#     if df["health_index"] > max_score:
-#         max_score = df["health_index"]
-        
+def CS_Decrypt(ciphertext, key):
+    result = ""
+    for i in ciphertext:
+            alp = chr((ord(i) - 65 - key) % 26 + 65) 
 
+            if alp == 'E':
+                alp = 'Q'
+            result += alp
 
-# print(max_score)
-# for i in df:
-#     if df[i]["treatment_cost"] < 50000:
-#         print("Low treatmentcost ID:", i)
+    return result
 
+vowels = ['A', 'E', 'I', 'O', 'U']
+while True:
+    skey = input("Enter key: ").upper()
+    if skey in vowels:
+        print("Valid key accepted:", skey)
+        break
+    else:
+        print("Invalid key")
 
-# max2 =0 
-# for id,score in df:
-#     if maxS == score['health_score']:
-#         max2=score [id]['health_score']
+while True:
+    Ptext = input("Enter Plain text: ").upper()
+    if Ptext.isalpha():
+        print("Valid plain text:", Ptext)
+        break
+    else:
+        print("Invalid plain text")
 
-# print("Higest scores are: ",maxS,)
+key = ord(skey)-65
 
-# heat_readings = [72, 78, 75, 82 , 88 ,85 ,92]
-# minheat = heat_readings[0]
-# maxRise = 0
-
-# for i in heat_readings:
-#     if i < minheat:
-#         minheat = i
-
-# for i in heat_readings:
-#     rise = i-minheat
-#     if rise> maxRise:
-#         maxRise = rise
-
-# print("Max Temperature Rise:", maxRise)
-
-
-# print("Name: Jawad Hussain || DOB: 12-09-2005", " FatherName: Nasar Ullah || DOB: 1-05-1980", " GrandFather Name: Sher Hamza || DOB: 8-5-1900")
+print(" key:",key)
+encrypted= CS_Encrypt(Ptext, key)
+decrypted= CS_Decrypt(encrypted, key)
+print("Encrypttext:", encrypted)
+print("Decryp text:", decrypted)
