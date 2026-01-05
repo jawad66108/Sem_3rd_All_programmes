@@ -1,100 +1,108 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-struct Student {
-    int id;
-    char name[50];
-};
-
-class AdmissionQueue {
+class Node
+{
 public:
-    int front;
-    int rear;
-    int capacity;
-    Student* arr;
-
-    AdmissionQueue(int cap) {
-        capacity = cap;
-        arr = new Student[capacity];
-        front = 0;
-        rear = -1;
-    }
-
-    ~AdmissionQueue() {
-        delete[] arr;
-    }
-
-    bool isEmpty() {
-        return front > rear;
-    }
-
-    bool isFull() {
-        return rear == capacity - 1;
-    }
-
-    void enqueue(Student s) {
-        if (isFull()) {
-            cout << "Queue is full\n";
-            return;
-        }
-        rear++;
-        arr[rear] = s;
-        cout << "Student added\n";
-    }
-
-    void dequeue() {
-        if (isEmpty()) {
-            cout << "No student to process\n";
-            return;
-        }
-        cout << "Student processed: " << arr[front].id << " " << arr[front].name << "\n";
-        front++;
-    }
-
-    void currentStudent() {
-        if (isEmpty()) {
-            cout << "No student is being served\n";
-            return;
-        }
-        cout << "Current student: " << arr[front].id << " " << arr[front].name << "\n";
-    }
-
-    int count() {
-        if (isEmpty()) return 0;
-        return rear - front + 1;
-    }
+	int priority;
+	int data;
+	Node *next;
 };
 
-int main() {
-    AdmissionQueue q(5);
-    int choice;
+Node *front = NULL;
 
-    do {
-        cout << "\n1. Add new student\n";
-        cout << "2. Process student\n";
-        cout << "3. Show current student\n";
-        cout << "4. Show total waiting students\n";
-        cout << "0. Exit\n";
-        cout << "Enter choice: ";
-        cin >> choice;
 
-        if (choice == 1) {
-            Student s;
-            cout << "Enter ID: ";
-            cin >> s.id;
-            cout << "Enter Name (no spaces): ";
-            cin >> s.name;
-            q.enqueue(s);
-        } else if (choice == 2) {
-            q.dequeue();
-        } else if (choice == 3) {
-            q.currentStudent();
-        } else if (choice == 4) {
-            cout << "Total waiting: " << q.count() << "\n";
-        }
+void insert(int item, int priority)
+{
+	Node *temp;
+	Node *newNode = new Node();
+	newNode->data = item;
+	newNode->priority = priority;
 
-    } while (choice != 0);
+	if( front == NULL || priority < front->priority )
+	
+	{
+		newNode->next = front;
+		front = newNode;
+	}
+	else
+	{
+		temp = front;
+		while( temp->next != NULL && temp->next->priority <= priority ){
+            temp = temp->next;
+		}
 
-    return 0;
+		newNode->next = temp->next;
+		temp->next = newNode;
+	}
 }
 
+
+void dequeue()
+{
+	Node *temp;
+	if(front == NULL)
+		cout<<"Queue Underflow"<<endl;
+	else
+	{
+		temp = front;
+		cout<<"Deleted item is : "<<temp->data;
+		front = front->next;
+		delete temp;
+	}
+}
+
+void display()
+{
+	Node *temp;
+	temp = front;
+	if(front == NULL)
+		cout<<"Queue is empty"<<endl;
+	else
+	{
+		cout<<"Queue is : "<<endl;
+		cout<<"Priority       Item"<<endl;
+		while(temp != NULL)
+		{
+			cout<<temp->priority<<"->"<<temp->data<<" ";
+			temp = temp->next;
+		}
+	}
+	cout<<endl;
+}
+
+int main()
+{
+	int choice,item,priority;
+	do
+	{
+		cout<<"1.Insert"<<endl;
+		cout<<"2.Delete"<<endl;
+		cout<<"3.Display"<<endl;
+		cout<<"4.Quit"<<endl;
+		cout<<"Enter your choice : "<<endl;
+		cin>>choice;
+		switch(choice)
+		{
+			case 1:
+				cout<<"Input the item value to be added in the queue : ";
+				cin>>item;
+				cout<<"Enter its priority : ";
+				cin>>priority;
+				insert(item,priority);
+				break;
+			case 2:
+				dequeue();
+				break;
+			case 3:
+				display();
+				break;
+			case 4:
+			break;
+				default :
+				cout<<"Wrong choice"<<endl;
+		}
+	}while(choice!=4);
+
+	return 0;
+}
