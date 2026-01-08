@@ -1,53 +1,58 @@
 #include<iostream>
 using namespace std;
 
-struct student{
-	char name [20];
-	int roll;
-	int marks;
-	
-};
+const int N =4;
+int front = -1 , rear =-1;
+int queue[N];
 
-void sort(student s[]){
-	for(int i=0;i<3-1;i++){
-		for(int j=0;j<3-i-1;j++){
-			if(s[i].marks<s[i+1].marks){
-				swap(s[i].marks,s[i+1].marks);
-			}
-		}
+void enqueue(int val){
+	if((rear+1)%N == front){
+		 cout<<"Queue is full";	
+		 return  ;
 	}
-	
-	for(int i=0;i<3;i++){
-		cout<<s[i].marks<<" "<<s[i].name<<" "<<s[i].roll<<endl;
+	if(front == -1 )
+		front = rear = 0 ;
+	else {
+		rear = (rear +1) % N;
+		
 	}
+	queue[rear] = val;
+}
+
+void dequeue(){
+	if(front == -1){
+		cout<< "Queue is empty";
+		return ;
+	}
+	else if(front == rear ){
+		front = rear = -1 ;
+	}
+	else{
+		front = (front + 1 ) % N;
+	}
+}
+
+void dis(){
+	  if (front == -1) {
+        cout << "Queue Empty\n";
+        return;
+    }
+
+    int i = front;
+    while (i != rear) {
+        cout << queue[i] << " ";
+        i = (i + 1) % N;
+    }
+    cout << queue[i] << endl;
 }
 
 int main(){
-	int marks[3][3]={};
-	
-	for(int i=0;i<3;i++){
-		for(int j=0;j<3;j++){
-			cout<<"["<< i<<"]"<<" ["<<j<<"] : ";
-			cin>>marks[i][j];
-		}
-	}
-	
-	for(int i=0;i<3;i++){
-		for(int j=0;j<3;j++){
-			cout<<marks[i][j]<<" ";
-		}
-		cout<<endl;
-	}
+	enqueue(520);
+	enqueue(55);
+	enqueue(5);
+	enqueue(50);
 
+	dequeue();
 	
-	student s[3];
-	cout<<"Enter name roll and marks: ";
-	for(int i=0;i<3;i++){
-		cin>>s[i].name>>s[i].roll>>s[i].marks;
-	}
-	
-	sort(s);
-	
+	dis();
 }
-
-
