@@ -1,43 +1,29 @@
-import heapq
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+import base64
 
-heuristics = {
-    'A': 6,  # Receiving Dock
-    'B': 5,  # Sorting Area
-    'C': 4,  # Cold Storage
-    'D': 3,  # Dry Goods
-    'E': 2,  # Produce Prep
-    'F': 1,  # Packing Station
-    'G': 0   # Dispatch (GOAL)
-}
+# Generate random key and IV (16 bytes each for AES-128)
+key = get_random_bytes(16)
+iv = get_random_bytes(16)
 
-graph = {
-    'A': [('B', 5)],                    # A -> B: 5 min
-    'B': [('C', 3), ('D', 4)],          # B -> C: 3 min, B -> D: 4 min
-    'C': [('E', 2)],                    # C -> E: 2 min
-    'D': [('F', 3)],                    # D -> F: 3 min
-    'E': [('F', 2), ('G', 1)],          # E -> F: 2 min, E -> G: 1 min
-    'F': [('G', 1)],                    # F -> G: 1 min
-    'G': []                             # Goal node
-}
+plain_text = "My name is jawad"
 
-def a_star_algorithm(graph, heuristics, start, goal):
-    open_list = []
-    heapq.heappush(open_list, (heuristics[start], 0, start, [start]))
-    
-    while open_list:
-        f, g, current, path = heapq.heappop(open_list)
-        
-        if current == goal:
-            return path, g
-            
-        for neighbor, cost in graph[current]:
-            new_g = g + cost
-            new_f = new_g + heuristics[neighbor]
-            heapq.heappush(open_list, (new_f, new_g, neighbor, path + [neighbor]))
-    
-    return None, float('inf')
+# Padding function to make text length a multiple of 16
+def pad(text):
+    while len(text) % 16 != 0:
+        text += ' '
+    return text
 
-path, cost = a_star_algorithm(graph, heuristics, 'A', 'E')
+# Encrypt
+cipher = AES.new(key, AES.MODE_CBC, iv)
+padded_text = pad(plain_text).encode('utf-8')
+cipher_text = cipher.encrypt(padded_text)
 
-print("Optimal Path:", path)
-print("Total Cost:", cost)
+# Encode ciphertext in Base64 for readability
+cipher_text_base64 = base64.b64encode(cipher_text).decode('utf-8')
+print("Encrypted Text:", cipher_text_base64)
+
+# Decrypt
+cipher_decrypt = AES.new(key, AES.MODE_CBC, iv)
+decrypted_text = cipher_decrypt.decrypt(cipher_text).decode('utf-8').strip()
+print("Decrypted Text:", decrypted_text)
